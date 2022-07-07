@@ -1,0 +1,147 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "Cambiar contraseña";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Usuario</h2>
+            <h5>Ingrese su nueva contraseña para actualizarla datos:</h5>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("ConfirmarContraseña", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-horizontal">
+
+
+                    <div class="form-group">
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(Model => Model.IdUsuario, new { @class = "hidden" })
+                            @Html.TextBoxFor(model => model.IdUsuario, new { @class = "hidden form-control", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.IdUsuario)
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Email)
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope-fill"></i></span>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail", disabled = true })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @id = "txtNamePrincipal" })
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @id = "txtNameComprobacion", @onblur = "return MatchCampos('labelName','txtNamePrincipal','txtNameComprobacion')" })
+                           <label id="labelName"></label>
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+
+                      
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+                <br />
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <input type="submit" value="Actualizar" class="btn btn-success" />
+                        @Html.ActionLink("Regresar", "GetAll", "Usuario", htmlAttributes: new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+
+    <script type="text/javascript">
+
+        function MatchCampos(labelName, txtNamePrincipal, txtNameComprobacion) {
+            var cadena1 = document.getElementById(txtNamePrincipal).value;
+            var cadena2 = document.getElementById(txtNameComprobacion).value;
+
+            if (cadena1 == "") {
+                $('#' + labelName).text("");
+                $('#' + txtNameComprobacion).removeClass('border-danger');
+            }
+            else if (cadena1 == cadena2) {
+                $('#' + labelName).text("Los campos coinciden");
+                $('#' + labelName).css({ "color": "green" })
+                $('#' + txtNameComprobacion).removeClass('border-danger');
+                $('#' + txtNameComprobacion).addClass('border-success');
+                return true;
+            }
+            else {
+                $('#' + labelName).text("Los campos no coinciden");
+                $('#' + labelName).css({ "color": "red" })
+                $('#' + txtNameComprobacion).addClass('border-danger');
+                $('#' + txtNameComprobacion).removeClass('border-success');
+                return false;
+            }
+        }
+
+
+    </script>
+
+
+
+
+
+
+}
